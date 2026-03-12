@@ -1,0 +1,36 @@
+---
+- name: "Play: Setting up webserver"
+  hosts: 192.168.1.2
+  become: true
+  tasks:
+    - name: "Task: Install webserver"
+      yum:
+        name: 
+          - httpd
+          - firewalld
+        state: present
+
+    - name: "Task: Start the service"
+      service:
+        name: "{{ item }}"
+        state: restarted
+        enabled: true
+      loop:
+        - httpd
+        - firewalld
+
+    - name: "Add firewall port"
+      firewalld:
+        port: 80/tcp
+        immediate: true
+        enabled: true
+        permanent: true
+
+
+
+
+
+
+
+
+
