@@ -1,0 +1,22 @@
+---
+- name: "Play: Create the users with the help of vars files"
+  hosts: all
+  vars:
+    user:
+      - name: vikas
+        id: 1002
+      - name: ankit
+        id: 1004
+      - name: narendra
+        id: 1254
+      - name: devkaran
+        id: 1024
+  become: true
+  tasks:
+    - name: "Task: Create some users"
+      user:
+        name: "{{ item.name }}"
+        state: present
+        id: "{{ item.id }}"
+      loop:
+        - "{{ user }}"
